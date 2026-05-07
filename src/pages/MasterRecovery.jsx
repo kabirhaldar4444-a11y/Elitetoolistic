@@ -4,7 +4,7 @@ import supabase from '../utils/supabase';
 import { useToast } from '../components/common/AlertProvider';
 
 const MasterRecovery = () => {
-  const [email, setEmail] = useState('support@harvardlearning.in');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const navigate = useNavigate();
