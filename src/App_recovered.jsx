@@ -28,11 +28,11 @@ function App() {
       setLoading(true);
       const { data, error } = await supabase.auth.getUser();
       const currentUser = data?.user;
-      
+
       if (currentUser) {
         setUser(currentUser);
         // Special case for admin email
-        const isAdminEmail = currentUser.email === 'info@harvardlearning.com';
+        const isAdminEmail = currentUser.email === 'support@harvardlearning.in';
         await fetchProfile(currentUser.id, isAdminEmail, currentUser.email);
       } else {
         setUser(null);
@@ -58,7 +58,7 @@ function App() {
         .select('*')
         .eq('id', userId)
         .single();
-      
+
       if (data) {
         // If it's the admin email but role is not admin, update it
         if (isAdminEmail && data.role !== 'admin') {
@@ -176,23 +176,23 @@ function App() {
               profile?.role === 'admin' ? <Navigate to="/admin" /> : <Navigate to="/" />
             ) : <AdminLogin onLoginSuccess={checkAuth} />
           } />
-          
+
           <Route path="/" element={
             !user ? <Navigate to="/login" /> :
-            profile?.role === 'candidate' ? (
-              !profile?.profile_completed ? <Navigate to="/complete-profile" /> :
-              activeExam ? (
-                <ExamPortal exam={activeExam} onFinish={() => setActiveExam(null)} submitSignal={submitSignal} />
-              ) : (
-                <CandidateDashboard exams={exams} onStartExam={setActiveExam} profile={profile} />
+              profile?.role === 'candidate' ? (
+                !profile?.profile_completed ? <Navigate to="/complete-profile" /> :
+                  activeExam ? (
+                    <ExamPortal exam={activeExam} onFinish={() => setActiveExam(null)} submitSignal={submitSignal} />
+                  ) : (
+                    <CandidateDashboard exams={exams} onStartExam={setActiveExam} profile={profile} />
+                  )
+              ) : profile?.role === 'admin' ? <Navigate to="/admin" /> : (
+                <div className="flex flex-col items-center justify-center min-h-[80vh] gap-6 text-center px-4 animate-fade-in">
+                  <h2 className="text-4xl font-black text-red-500 tracking-tight">Identity Mismatch</h2>
+                  <p className="text-slate-400 max-w-md">We found your account but your profile details are missing or corrupted.</p>
+                  <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full font-bold transition-all">Sign Out & Retry</button>
+                </div>
               )
-            ) : profile?.role === 'admin' ? <Navigate to="/admin" /> : (
-              <div className="flex flex-col items-center justify-center min-h-[80vh] gap-6 text-center px-4 animate-fade-in">
-                <h2 className="text-4xl font-black text-red-500 tracking-tight">Identity Mismatch</h2>
-                <p className="text-slate-400 max-w-md">We found your account but your profile details are missing or corrupted.</p>
-                <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full font-bold transition-all">Sign Out & Retry</button>
-              </div>
-            )
           } />
 
           <Route path="/complete-profile" element={
@@ -206,7 +206,7 @@ function App() {
               <Profile profile={profile} />
             ) : <Navigate to="/login" />
           } />
-           <Route path="/admin" element={
+          <Route path="/admin" element={
             profile?.role === 'admin' ? (
               <AdminDashboard exams={exams} addExam={addExam} deleteExam={deleteExam} onRefresh={fetchExams} />
             ) : <Navigate to="/admin/login" />
@@ -229,27 +229,27 @@ function App() {
               <EditUser />
             ) : <Navigate to="/admin/login" />
           } />
-          
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
 
       {/* Global Floating Theme Toggle */}
       <div className="fixed bottom-8 right-8 z-[9999] animate-fade-in">
-        <button 
+        <button
           onClick={toggleTheme}
           className="w-14 h-14 rounded-2xl backdrop-blur-xl border shadow-2xl flex items-center justify-center hover:scale-110 active:scale-90 transition-all duration-300 group"
-          style={{ 
-            backgroundColor: 'var(--glass-bg)', 
+          style={{
+            backgroundColor: 'var(--glass-bg)',
             borderColor: 'var(--glass-border)',
             color: 'var(--text-dark)'
           }}
           title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
         >
           {theme === 'dark' ? (
-            <svg className="w-6 h-6 group-hover:rotate-[30deg] transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
+            <svg className="w-6 h-6 group-hover:rotate-[30deg] transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" /></svg>
           ) : (
-            <svg className="w-6 h-6 group-hover:-rotate-[30deg] transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <svg className="w-6 h-6 group-hover:-rotate-[30deg] transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
           )}
         </button>
       </div>
