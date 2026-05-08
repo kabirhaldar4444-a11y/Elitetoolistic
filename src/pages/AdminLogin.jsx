@@ -4,7 +4,7 @@ import supabase from '../utils/supabase';
 import AuthLayout from '../components/auth/AuthLayout';
 
 const AdminLogin = ({ onLoginSuccess }) => {
-  const [email, setEmail] = useState('info@harvardlearning.com');
+  const [email, setEmail] = useState('support@harvardlearning.in');
   const [password, setPassword] = useState('qwerty@123');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
       // STEP 6: Hierarchical Redirect Logic
       // MASTER ADMIN CHECK (Hardcoded Email Safety)
-      if (user.email === 'info@harvardlearning.com') {
+      if (user.email === 'support@harvardlearning.in' || user.email === 'kabirhaldar4444@gmail.com') {
         await onLoginSuccess();
         navigate('/admin');
       } 

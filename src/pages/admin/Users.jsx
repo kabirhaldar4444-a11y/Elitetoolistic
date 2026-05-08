@@ -22,7 +22,7 @@ const Users = ({ user, profile: activeProfile }) => {
   const [showCreateAdmin, setShowCreateAdmin] = useState(false);
   const navigate = useNavigate();
 
-  const isSuperAdmin = user?.email === 'info@harvardlearning.com' || user?.email === 'kabirhaldar4444@gmail.com';
+  const isSuperAdmin = user?.email === 'support@harvardlearning.in' || user?.email === 'kabirhaldar4444@gmail.com';
 
   useEffect(() => {
     fetchUsers();
@@ -85,7 +85,7 @@ const Users = ({ user, profile: activeProfile }) => {
   };
 
   const handleDeleteUser = async (targetUser) => {
-    if (targetUser.email === 'info@harvardlearning.com') {
+    if (targetUser.email === 'support@harvardlearning.in' || targetUser.email === 'kabirhaldar4444@gmail.com') {
       toast('The Master Admin account cannot be deleted.', 'error');
       return;
     }
@@ -142,7 +142,7 @@ const Users = ({ user, profile: activeProfile }) => {
 
   const filteredRoleUsers = users.filter(u =>
     u.role === 'admin' &&
-    u.email !== 'info@harvardlearning.com' && (
+    u.email !== 'support@harvardlearning.in' && u.email !== 'kabirhaldar4444@gmail.com' && (
       u.full_name?.toLowerCase().includes(roleSearchQuery.toLowerCase()) ||
       u.email?.toLowerCase().includes(roleSearchQuery.toLowerCase())
     )
@@ -328,7 +328,7 @@ const Users = ({ user, profile: activeProfile }) => {
                   </div>
                   <div className="shrink-0 flex gap-6">
                     <div className="text-center">
-                      <div className="text-4xl font-black text-[#A51C30] font-serif">{users.filter(u => u.role === 'admin' && u.email !== 'info@harvardlearning.com').length}</div>
+                      <div className="text-4xl font-black text-[#A51C30] font-serif">{users.filter(u => u.role === 'admin' && u.email !== 'support@harvardlearning.in' && u.email !== 'kabirhaldar4444@gmail.com').length}</div>
                       <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-2">Staff Faculty</div>
                     </div>
                     <div className="text-center">

@@ -24,7 +24,7 @@ const CreateUser = ({ user, profile, initialRole }) => {
     if (data) setExams(data);
   };
 
-  const isSuperAdmin = user?.email === 'info@harvardlearning.com' || user?.email === 'kabirhaldar4444@gmail.com';
+  const isSuperAdmin = user?.email === 'support@harvardlearning.in' || user?.email === 'kabirhaldar4444@gmail.com';
 
   const generatePassword = () => {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
@@ -220,11 +220,11 @@ const CreateUser = ({ user, profile, initialRole }) => {
 
           {role === 'candidate' && (
             <div className="pt-2 relative z-[60]">
-              <MultiSelectExams 
+              <MultiSelectExams
                 exams={exams}
                 selectedIds={allottedExamIds}
                 onToggle={(id) => {
-                  setAllottedExamIds(prev => 
+                  setAllottedExamIds(prev =>
                     prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
                   );
                 }}

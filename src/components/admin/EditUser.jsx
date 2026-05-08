@@ -45,7 +45,7 @@ const EditUser = ({ user, profile }) => {
   const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
-  const isSuperAdmin = user?.email === 'info@harvardlearning.com';
+  const isSuperAdmin = user?.email === 'support@harvardlearning.in' || user?.email === 'kabirhaldar4444@gmail.com';
   
   const [editUser, setEditUser] = useState({
     id: '',
