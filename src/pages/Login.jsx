@@ -171,6 +171,16 @@ const Login = ({ onLoginSuccess }) => {
                 </div>
               )}
             </button>
+
+            <div className="text-center">
+              <button 
+                type="button"
+                onClick={() => navigate('/master-recovery')}
+                className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-[#A51C30] transition-colors"
+              >
+                Forgot Password? Master Recovery
+              </button>
+            </div>
           </form>
         </div>
 
