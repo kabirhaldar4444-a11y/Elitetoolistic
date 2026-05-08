@@ -4,12 +4,12 @@ import supabase from '../../utils/supabase';
 import MultiSelectExams from './MultiSelectExams';
 import { useToast } from '../common/AlertProvider';
 
-const CreateUser = ({ user, profile, initialRole = 'candidate' }) => {
+const CreateUser = ({ user, profile, initialRole }) => {
   const toast = useToast();
   const [candidateEmail, setCandidateEmail] = useState('');
   const [candidatePassword, setCandidatePassword] = useState('');
   const [candidateName, setCandidateName] = useState('');
-  const [role, setRole] = useState(initialRole);
+  const [role, setRole] = useState(initialRole || 'candidate');
   const [isCreating, setIsCreating] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [exams, setExams] = useState([]);
@@ -24,7 +24,7 @@ const CreateUser = ({ user, profile, initialRole = 'candidate' }) => {
     if (data) setExams(data);
   };
 
-  const isSuperAdmin = user?.email === 'info@harvardlearning.com';
+  const isSuperAdmin = user?.email === 'info@harvardlearning.com' || user?.email === 'kabirhaldar4444@gmail.com';
 
   const generatePassword = () => {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";

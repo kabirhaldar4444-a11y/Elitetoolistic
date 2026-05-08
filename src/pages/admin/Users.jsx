@@ -22,7 +22,7 @@ const Users = ({ user, profile: activeProfile }) => {
   const [showCreateAdmin, setShowCreateAdmin] = useState(false);
   const navigate = useNavigate();
 
-  const isSuperAdmin = user?.email === 'info@harvardlearning.com';
+  const isSuperAdmin = user?.email === 'info@harvardlearning.com' || user?.email === 'kabirhaldar4444@gmail.com';
 
   useEffect(() => {
     fetchUsers();
@@ -317,7 +317,14 @@ const Users = ({ user, profile: activeProfile }) => {
                     <h2 className="text-4xl font-black text-[#1e293b] font-serif mb-4 flex items-center gap-4">
                       Faculty Governance
                     </h2>
-                    <p className="text-slate-400 font-medium text-lg leading-relaxed">Commission collegiate personnel with administrative authority. Precise oversight of institutional permissions is paramount.</p>
+                    <p className="text-slate-400 font-medium text-lg leading-relaxed mb-6">Commission collegiate personnel with administrative authority. Precise oversight of institutional permissions is paramount.</p>
+                    <button 
+                      onClick={() => setShowCreateAdmin(true)}
+                      className="btn-premium !bg-[#C49619] hover:!bg-[#B38518] !py-3 !px-8 flex items-center gap-3 shadow-lg shadow-[#C49619]/20 transition-all active:scale-95"
+                    >
+                      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                      Commission Staff Personnel
+                    </button>
                   </div>
                   <div className="shrink-0 flex gap-6">
                     <div className="text-center">
