@@ -1,5 +1,5 @@
 test
-[EMAIL_ADDRESS: Support@harvardlearning.in]          
+[EMAIL_ADDRESS: kabirhaldar4444@gmail.com]          
 [password: Support@1234]
 
 use Web3form for send the all kyc details to this email with all user data

