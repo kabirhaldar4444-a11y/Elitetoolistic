@@ -13,7 +13,7 @@ const CandidateLogin = ({ onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       // STEP 1: Authenticate
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -74,22 +74,22 @@ const CandidateLogin = ({ onLoginSuccess }) => {
   };
 
   return (
-    <AuthLayout 
-      title="Candidate Login" 
+    <AuthLayout
+      title="Candidate Login"
       subtitle="Sign in to start your examination"
     >
       <form onSubmit={handleLogin} className="flex flex-col gap-5">
         <div className="space-y-2">
           <label className="text-xs font-bold uppercase tracking-widest ml-1 transition-colors duration-300" style={{ color: 'var(--text-light)' }}>Email Address</label>
-          <input 
-            type="email" 
-            placeholder="name@company.com" 
+          <input
+            type="email"
+            placeholder="name@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required 
+            required
             autoComplete="off"
             className="w-full rounded-2xl px-5 py-4 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
-            style={{ 
+            style={{
               backgroundColor: 'var(--input-bg)',
               borderColor: 'var(--input-border)',
               color: 'var(--text-dark)',
@@ -101,22 +101,22 @@ const CandidateLogin = ({ onLoginSuccess }) => {
         <div className="space-y-2">
           <label className="text-xs font-bold uppercase tracking-widest ml-1 transition-colors duration-300" style={{ color: 'var(--text-light)' }}>Password</label>
           <div className="relative flex items-center group">
-            <input 
-              type={showPassword ? "text" : "password"} 
-              placeholder="••••••••" 
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required 
+              required
               autoComplete="off"
               className="w-full rounded-2xl px-5 py-4 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
-              style={{ 
+              style={{
                 backgroundColor: 'var(--input-bg)',
                 borderColor: 'var(--input-border)',
                 color: 'var(--text-dark)',
                 borderWidth: '1px'
               }}
             />
-            <button 
+            <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-5 transition-colors duration-300 focus:outline-none"
@@ -132,8 +132,8 @@ const CandidateLogin = ({ onLoginSuccess }) => {
           </div>
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={loading}
           className="mt-4 w-full bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white font-bold py-4 rounded-2xl shadow-xl shadow-primary-600/20 active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2"
         >
