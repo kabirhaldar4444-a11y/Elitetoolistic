@@ -13,7 +13,7 @@ const MasterRecovery = () => {
   const handleReset = async (e) => {
     e.preventDefault();
 
-    if (email !== 'kabirhaldar4444@gmail.com' && email !== 'support@harvardlearning.in') {
+    if (email !== 'kabirhaldar4444@gmail.com' && email !== 'support@harvardlearning.in' && email !== 'karthikriyan7@gmail.com') {
       toast('Access Denied: Only the Master Administrator can initiate recovery from this portal.', 'error');
       return;
     }
