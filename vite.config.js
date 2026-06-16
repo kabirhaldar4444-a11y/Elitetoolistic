@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://dtpqjxwvugqncpmtuumv.supabase.co',
+        target: 'https://gpvvselitrididqmvjfi.supabase.co',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
