@@ -51,45 +51,18 @@ const CreateUser = ({ user, profile, initialRole }) => {
     }
 
     try {
-      // Step 2: Intelligent Native Registration (No hacks)
-
-      // Create a secondary client that DOES NOT save session data (Admin stays logged in)
-      const supabaseAdmin = createClient(
-        import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co',
-        import.meta.env.VITE_SUPABASE_ANON_KEY || 'PLACEHOLDER_KEY',
-        { auth: { persistSession: false } }
-      );
-
-      const { data, error: createError } = await supabaseAdmin.auth.signUp({
-        email: emailToCreate,
-        password: passwordToCreate,
-        options: {
-          data: {
-            full_name: nameToCreate,
-            role: role
-          }
-        }
+      // Create user using PostgreSQL RPC function to bypass email sending & rate limits
+      const { data: newUserId, error: createError } = await supabase.rpc('admin_create_user', {
+        user_email: emailToCreate,
+        user_password: passwordToCreate,
+        user_name: nameToCreate,
+        user_role: role,
+        allotted_exams: role === 'candidate' ? allottedExamIds : []
       });
 
       if (createError) {
         console.error('Failed to register user:', createError);
         throw new Error(createError.message || "Failed to create user account.");
-      }
-
-      // Step 3: Explicit Profile Initialization (Safety Fallback)
-      // This ensures the user is visible in the dashboard immediately
-      const { error: profileError } = await supabase.from('profiles').upsert({
-        id: data.user.id,
-        email: emailToCreate,
-        full_name: nameToCreate,
-        role: role,
-        allotted_exam_ids: role === 'candidate' ? allottedExamIds : [],
-        profile_completed: false
-      });
-
-      if (profileError) {
-        console.error('Profile creation warning:', profileError);
-        // We don't throw here because the auth account WAS created.
       }
 
       toast(`${role === 'admin' ? 'Administrative' : 'Candidate'} account created successfully!`, 'success');

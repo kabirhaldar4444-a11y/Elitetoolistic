@@ -268,7 +268,7 @@ BEGIN
   WHERE id = v_target_id;
 
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, auth;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, auth, extensions;
 
 -- C. Admin Delete User (clean deletion of users & related data)
 CREATE OR REPLACE FUNCTION public.admin_delete_user(target_user_id uuid)

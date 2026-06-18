@@ -76,7 +76,7 @@ BEGIN
   WHERE id = v_target_id;
 
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, auth;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, auth, extensions;
 
 -- 5. Force PostgREST to reload the schema cache
 NOTIFY pgrst, 'reload schema';
