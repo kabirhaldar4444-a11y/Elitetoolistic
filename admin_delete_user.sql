@@ -13,7 +13,7 @@ DECLARE
     target_exists boolean;
 BEGIN
     -- 1. SECURITY CHECK: Verify the caller is an admin
-    caller_role := public.get_user_role();
+    caller_role := COALESCE(public.get_user_role(), '');
     IF caller_role != 'admin' THEN
         RAISE EXCEPTION 'Unauthorized: Only admins can delete users';
     END IF;

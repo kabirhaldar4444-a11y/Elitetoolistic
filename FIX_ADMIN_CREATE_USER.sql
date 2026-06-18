@@ -26,7 +26,7 @@ DECLARE
   normalized_email text;
 BEGIN
   -- 1. Check if caller is admin
-  IF public.get_user_role() != 'admin' THEN
+  IF COALESCE(public.get_user_role(), '') != 'admin' THEN
     RAISE EXCEPTION 'Access Denied: Only administrators can create users';
   END IF;
 

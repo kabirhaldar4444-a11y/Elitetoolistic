@@ -55,7 +55,7 @@ BEGIN
 
   -- B. Security check: Only admins can perform this
   -- We check the caller's role using our helper
-  IF public.get_user_role() != 'admin' THEN
+  IF COALESCE(public.get_user_role(), '') != 'admin' THEN
     RAISE EXCEPTION 'Access Denied: Not authorized to update candidates';
   END IF;
 

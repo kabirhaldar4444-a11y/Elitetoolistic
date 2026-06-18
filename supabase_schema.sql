@@ -183,7 +183,7 @@ DECLARE
   normalized_email text;
 BEGIN
   -- Security check
-  IF public.get_user_role() != 'admin' THEN
+  IF COALESCE(public.get_user_role(), '') != 'admin' THEN
     RAISE EXCEPTION 'Access Denied: Only administrators can create candidates';
   END IF;
 
@@ -247,7 +247,7 @@ BEGIN
   v_exam_ids := new_allotted_exam_ids::uuid[];
 
   -- Security check
-  IF public.get_user_role() != 'admin' THEN
+  IF COALESCE(public.get_user_role(), '') != 'admin' THEN
     RAISE EXCEPTION 'Access Denied: Not authorized to update candidates';
   END IF;
 
@@ -278,7 +278,7 @@ DECLARE
     target_exists boolean;
 BEGIN
     -- Security check
-    caller_role := public.get_user_role();
+    caller_role := COALESCE(public.get_user_role(), '');
     IF caller_role != 'admin' THEN
         RAISE EXCEPTION 'Unauthorized: Only admins can delete users';
     END IF;
